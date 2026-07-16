@@ -2,10 +2,10 @@ use std::sync::LazyLock;
 
 use regex::Regex;
 
-static NON_KEYWORD_REGEX: LazyLock<Regex> = LazyLock::new(|| Regex::new(r"[^\p{L}0-9_-]").unwrap());
+static NON_KEYWORD_REGEX: LazyLock<Regex> = LazyLock::new(|| Regex::new(r"[^\p{L}0-9_@$-]").unwrap());
 static BACKWARD_REGEX: LazyLock<Regex> =
-    LazyLock::new(|| Regex::new(r"[\p{L}0-9_][\p{L}0-9_-]*$").unwrap());
-static FORWARD_REGEX: LazyLock<Regex> = LazyLock::new(|| Regex::new(r"^[\p{L}0-9_-]+").unwrap());
+    LazyLock::new(|| Regex::new(r"[\p{L}0-9_@$][\p{L}0-9_@$-]*$").unwrap());
+static FORWARD_REGEX: LazyLock<Regex> = LazyLock::new(|| Regex::new(r"^[\p{L}0-9_@$-]+").unwrap());
 
 /// Given a line and cursor position, returns the start and end indices of the keyword
 pub fn get_keyword_range(line: &str, col: usize, match_suffix: bool) -> (usize, usize) {
